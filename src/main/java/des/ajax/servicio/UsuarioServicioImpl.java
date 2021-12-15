@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +21,15 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public Usuario crearUsuario(Usuario u) {
-    	
-        Integer resultado = usuarioDao.crearUsuario(u);
-        return u;
-    }
+        try {
+            Integer resultado = usuarioDao.crearUsuario(u);
+            return u;
+        } catch (DataAccessException dae) {
+
+            return null;
+        }
+        }
+
 
     @Override
     public Boolean eliminarUsuario(String email) {
@@ -37,7 +43,7 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public Usuario obtenerUsuario(String email) {
-        return null;
+        return usuarioDao.obtenerUsuario(email);
     }
 
     @Override

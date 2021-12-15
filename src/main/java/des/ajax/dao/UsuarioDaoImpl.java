@@ -33,7 +33,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	public Usuario obtenerUsuario(String email) {
-		return null;
+		return jdbcTemplate.queryForObject("SELECT * FROM USUARIO WHERE email=?",
+				(rs, rowNum) -> new Usuario(rs.getString("nombre"), rs.getString("email")),email);
 	}
 
 	@Override
