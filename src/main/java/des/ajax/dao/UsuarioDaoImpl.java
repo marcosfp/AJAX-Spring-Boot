@@ -2,44 +2,30 @@ package des.ajax.dao;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 
 import des.ajax.entidades.Usuario;
 
 @Repository
-public class UsuarioDaoImpl implements UsuarioDao {
-
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+public class UsuarioDaoImpl extends DaoGenericoImpl<Usuario> implements UsuarioDao {
 
 	@Override
-	public Integer crearUsuario(Usuario u) {
+	public Usuario obtenerUsuarioPorEmail(String email) {
+		Query query = this.em.createQuery("SELECT u FROM Usuario u WHERE email= :valor");
+		query.setParameter("valor", email);
+		Usuario u = (Usuario) query.getSingleResult();
 
-		return jdbcTemplate.update("INSERT INTO USUARIO (nombre, email) VALUES(?,?)", u.getNombre(), u.getEmail());
+		return u;
 
-	}
-
-	@Override
-	public Boolean eliminarUsuario(String email) {
-		return null;
-	}
-
-	@Override
-	public Usuario modficiarUsuario(Usuario u) {
-		return null;
-	}
-
-	@Override
-	public Usuario obtenerUsuario(String email) {
-		return jdbcTemplate.queryForObject("SELECT * FROM USUARIO WHERE email=?",
-				(rs, rowNum) -> new Usuario(rs.getString("nombre"), rs.getString("email")),email);
 	}
 
 	@Override
 	public List<Usuario> obtenerUsuarios() {
-		return jdbcTemplate.query("SELECT * FROM USUARIO",
-				(rs, rowNum) -> new Usuario(rs.getString("nombre"), rs.getString("email")));
+		
+		Query query = this.em.createQuery("SELECT u FROM Usuario u");
+		List<Usuario> listaU = (List<Usuario>) query.getResultList();
+		return listaU;
 	}
 }

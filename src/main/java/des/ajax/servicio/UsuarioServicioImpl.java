@@ -22,8 +22,8 @@ public class UsuarioServicioImpl implements UsuarioServicio{
     @Override
     public Usuario crearUsuario(Usuario u) {
         try {
-            Integer resultado = usuarioDao.crearUsuario(u);
-            return u;
+            Usuario usuario = usuarioDao.crear(u);
+            return usuario;
         } catch (DataAccessException dae) {
 
             return null;
@@ -43,7 +43,7 @@ public class UsuarioServicioImpl implements UsuarioServicio{
 
     @Override
     public Usuario obtenerUsuario(String email) {
-        return usuarioDao.obtenerUsuario(email);
+        return usuarioDao.obtenerUsuarioPorEmail(email);
     }
 
     @Override

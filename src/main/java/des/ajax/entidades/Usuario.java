@@ -1,35 +1,61 @@
 package des.ajax.entidades;
 
-
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "usuario")
 public class Usuario implements Serializable {
 
-    private String nombre;
-    private String email;
+	private static final long serialVersionUID = -7001175685310295881L;
 
-    public Usuario() {
-    }
+	private String nombre;
 
-    public Usuario(String nombre, String email) {
-        this.nombre = nombre;
-        this.email = email;
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Idusuario")
+	private Long id;
 
-    public String getEmail() {
-        return email;
-    }
+	@Column(name = "correo")
+	private String email;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public Usuario() {
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public Usuario(String nombre, String email) {
+		super();
+		this.nombre = nombre;
+		this.email = email;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 }
